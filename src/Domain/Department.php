@@ -5,13 +5,13 @@ namespace App\Domain;
 use App\Enum\SupplementType;
 use Symfony\Component\Uid\Uuid;
 
-final class Department
+class Department
 {
     public function __construct(
-        private readonly Uuid $id,
-        private readonly string $name,
-        private readonly int $salarySupplement,
-        private readonly SupplementType $supplementType
+        private Uuid $id,
+        private string $name,
+        private int $salarySupplement,
+        private SupplementType $supplementType
     ) {}
 
     public function getId(): Uuid

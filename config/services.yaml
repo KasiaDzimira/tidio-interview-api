@@ -9,3 +9,19 @@ services:
         resource: '../src/'
         exclude:
             - '../src/Kernel.php'
+
+    App\Domain\Service\Calculator\FixedAmountSalaryCalculator:
+        tags:
+            - { name: 'salary.calculator' }
+
+    App\Domain\Service\Calculator\PercentageSalaryCalculator:
+        tags:
+            - { name: 'salary.calculator' }
+
+    App\Domain\Service\SalaryProvider:
+        arguments:
+            - !tagged_iterator salary.calculator
+
+    App\Presentation\Listener\Exception\ServiceExceptions:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

@@ -5,15 +5,15 @@ namespace App\Domain;
 use DateTimeInterface;
 use Symfony\Component\Uid\Uuid;
 
-final class Employee
+class Employee
 {
     public function __construct(
-        private readonly Uuid $id,
-        private readonly string $firstName,
-        private readonly string $lastName,
-        private readonly Department $department,
-        private readonly float $basicSalary,
-        private readonly DateTimeInterface $employmentYear
+        private Uuid $id,
+        private string $firstName,
+        private string $lastName,
+        private Department $department,
+        private float $basicSalary,
+        private DateTimeInterface $employmentYear
     ) {}
 
     public function getId(): Uuid
