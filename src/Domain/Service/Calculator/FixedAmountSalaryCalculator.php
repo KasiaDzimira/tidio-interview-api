@@ -10,7 +10,6 @@ use DateTimeInterface;
 
 final class FixedAmountSalaryCalculator implements SalaryCalculator
 {
-    private const MIN_YEARS_OF_EXPERIENCE = 5;
     private const MAX_YEARS_WITH_SUPPLEMENT = 10;
 
     public function calculate(
@@ -20,10 +19,6 @@ final class FixedAmountSalaryCalculator implements SalaryCalculator
     ): float
     {
         $numberOfExperienceYears = $employmentYear->diff(new DateTime())->y;
-
-        if ($numberOfExperienceYears < self::MIN_YEARS_OF_EXPERIENCE) {
-            return $basicSalary;
-        }
 
         $numberOfSupplements = $numberOfExperienceYears < self::MAX_YEARS_WITH_SUPPLEMENT ?
             $numberOfExperienceYears :

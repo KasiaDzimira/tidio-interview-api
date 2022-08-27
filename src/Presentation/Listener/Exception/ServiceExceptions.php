@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Presentation\Listener\Exception;
 
 use App\Domain\Exception\SalaryReportFilterException;
+use App\Domain\Exception\SalaryReportSortingException;
 use App\Domain\Exception\SalaryServiceException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +53,7 @@ final class ServiceExceptions
     {
         return [
             SalaryReportFilterException::class => ['errorCode' => Response::HTTP_BAD_REQUEST],
+            SalaryReportSortingException::class => ['errorCode' => Response::HTTP_BAD_REQUEST],
         ];
     }
 }

@@ -10,18 +10,21 @@ use Doctrine\ORM\QueryBuilder;
 
 final class DepartmentFilter extends AbstractFilter
 {
+    private const DEPARTMENT_ALIAS = 'department';
+
     public function appendFilter(
         QueryBuilder $qb,
         InputFilterInterface $inputFilter,
         string $tableAlias
     ): void {
         $whereStatement = sprintf(
-            'LOWER(%s.%s.name) LIKE :departmentName',
-            $tableAlias,
-            $this->getKey()
+            'LOWER(%s.name) LIKE :departmentName',
+            self::DEPARTMENT_ALIAS
         );
 
-        $qb->andWhere($whereStatement)
+        $qb
+            ->leftJoin(sprintf('%s.department', $tableAlias), self::DEPARTMENT_ALIAS)
+            ->andWhere($whereStatement)
             ->setParameter('departmentName', '%'.mb_strtolower($inputFilter->getValue()).'%');
     }
 
