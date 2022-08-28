@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Service;
 
+use App\Application\Dto\SalaryComponents;
+use App\Domain\Exception\SalaryCalculationException;
 use App\Domain\Service\Calculator\SalaryCalculator;
-use App\Enum\SupplementType;
-use DateTimeInterface;
 
 final class SalaryProvider implements Salaries
 {
@@ -17,23 +17,13 @@ final class SalaryProvider implements Salaries
         private readonly iterable $salaryCalculators
     ) {}
 
-    public function calculateSalary(
-        float $basicSalary,
-        int $salarySupplement,
-        DateTimeInterface $employmentYear,
-        SupplementType $supplementType
-    ): float {
+    public function calculateSalary(SalaryComponents $salaryComponents): float {
         foreach ($this->salaryCalculators as $salaryCalculator) {
-            if ($salaryCalculator->supportsSupplementType($supplementType)) {
-                return $salaryCalculator->calculate(
-                    $basicSalary,
-                    $salarySupplement,
-                    $employmentYear
-                );
+            if ($salaryCalculator->supportsSupplementType($salaryComponents->getSupplementType())) {
+                return $salaryCalculator->calculate($salaryComponents);
             }
         }
 
-        //@TO_DO throw an exception if none of the calculators meet the condition
-        return 0;
+        throw new SalaryCalculationException('The calculator for the specified supplement type cannot be found');
     }
 }

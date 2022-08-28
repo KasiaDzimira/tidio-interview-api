@@ -2,15 +2,13 @@
 
 namespace App\Domain\Service;
 
-use App\Enum\SupplementType;
-use DateTimeInterface;
+use App\Application\Dto\SalaryComponents;
+use App\Domain\Exception\SalaryCalculationException;
 
 interface Salaries
 {
-    public function calculateSalary(
-        float $basicSalary,
-        int $salarySupplement,
-        DateTimeInterface $employmentYear,
-        SupplementType $supplementType
-    ): float;
+    /**
+     * @throws SalaryCalculationException
+     */
+    public function calculateSalary(SalaryComponents $salaryComponents): float;
 }

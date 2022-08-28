@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Service;
 
+use App\Application\Dto\SalaryComponents;
 use App\Domain\Service\Calculator\FixedAmountSalaryCalculator;
 use App\Domain\Service\Calculator\PercentageSalaryCalculator;
 use App\Domain\Service\Calculator\SalaryCalculator;
@@ -40,12 +41,13 @@ final class SalaryProviderTest extends TestCase
     )
     {
         $salaryProvider = new SalaryProvider($this->salaryCalculators);
-        $salary = $salaryProvider->calculateSalary(
+        $salaryComponents = new SalaryComponents(
             $basicSalary,
             $salarySupplement,
             $employmentYear,
             $supplementType
         );
+        $salary = $salaryProvider->calculateSalary($salaryComponents);
 
         $this->assertEquals($finalSalary, $salary);
     }

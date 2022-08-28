@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Service\Calculator;
 
+use App\Application\Dto\SalaryComponents;
 use App\Domain\Service\Calculator\FixedAmountSalaryCalculator;
 use App\Enum\SupplementType;
 use DateTime;
@@ -23,7 +24,13 @@ final class FixedAmountSalaryCalculatorTest extends TestCase
     )
     {
         $salaryCalculator = new FixedAmountSalaryCalculator();
-        $salary = $salaryCalculator->calculate($basicSalary, $salarySupplement, $employmentYear);
+        $salaryComponents = new SalaryComponents(
+            $basicSalary,
+            $salarySupplement,
+            $employmentYear,
+            SupplementType::FIXED_AMOUNT
+        );
+        $salary = $salaryCalculator->calculate($salaryComponents);
 
         $this->assertEquals($finalSalary, $salary);
     }

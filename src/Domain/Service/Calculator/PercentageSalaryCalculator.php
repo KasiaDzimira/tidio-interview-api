@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Calculator;
 
+use App\Application\Dto\SalaryComponents;
 use App\Enum\SupplementType;
-use DateTimeInterface;
 
 final class PercentageSalaryCalculator implements SalaryCalculator
 {
-    public function calculate(
-        float $basicSalary,
-        int $salarySupplement,
-        DateTimeInterface $employmentYear
-    ): float {
-        return $basicSalary + $basicSalary * $salarySupplement * 0.01;
+    public function calculate(SalaryComponents $salaryComponents): float {
+        return $salaryComponents->getBasicSalary() + $salaryComponents->getBasicSalary() * $salaryComponents->getSalarySupplement() * 0.01;
     }
 
     public function supportsSupplementType(SupplementType $supplementType): bool

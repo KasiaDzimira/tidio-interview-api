@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Presentation\Listener\Exception;
 
+use App\Domain\Exception\SalaryCalculationException;
 use App\Domain\Exception\SalaryReportFilterException;
 use App\Domain\Exception\SalaryReportSortingException;
 use App\Domain\Exception\SalaryServiceException;
@@ -54,6 +55,7 @@ final class ServiceExceptions
         return [
             SalaryReportFilterException::class => ['errorCode' => Response::HTTP_BAD_REQUEST],
             SalaryReportSortingException::class => ['errorCode' => Response::HTTP_BAD_REQUEST],
+            SalaryCalculationException::class => ['errorCode' => Response::HTTP_BAD_REQUEST],
         ];
     }
 }

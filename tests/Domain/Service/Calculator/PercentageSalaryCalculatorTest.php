@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Domain\Service\Calculator;
 
+use App\Application\Dto\SalaryComponents;
 use App\Domain\Service\Calculator\PercentageSalaryCalculator;
 use App\Enum\SupplementType;
 use DateTime;
@@ -23,7 +24,13 @@ final class PercentageSalaryCalculatorTest extends TestCase
     )
     {
         $salaryCalculator = new PercentageSalaryCalculator();
-        $salary = $salaryCalculator->calculate($basicSalary, $salarySupplement, $employmentYear);
+        $salaryComponents = new SalaryComponents(
+            $basicSalary,
+            $salarySupplement,
+            $employmentYear,
+            SupplementType::PERCENTAGE
+        );
+        $salary = $salaryCalculator->calculate($salaryComponents);
 
         $this->assertEquals($finalSalary, $salary);
     }

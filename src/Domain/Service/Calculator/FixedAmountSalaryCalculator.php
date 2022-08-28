@@ -4,27 +4,23 @@ declare(strict_types=1);
 
 namespace App\Domain\Service\Calculator;
 
+use App\Application\Dto\SalaryComponents;
 use App\Enum\SupplementType;
 use DateTime;
-use DateTimeInterface;
 
 final class FixedAmountSalaryCalculator implements SalaryCalculator
 {
     private const MAX_YEARS_WITH_SUPPLEMENT = 10;
 
-    public function calculate(
-        float $basicSalary,
-        int $salarySupplement,
-        DateTimeInterface $employmentYear
-    ): float
+    public function calculate(SalaryComponents $salaryComponents): float
     {
-        $numberOfExperienceYears = $employmentYear->diff(new DateTime())->y;
+        $numberOfExperienceYears = $salaryComponents->getEmploymentYear()->diff(new DateTime())->y;
 
         $numberOfSupplements = $numberOfExperienceYears < self::MAX_YEARS_WITH_SUPPLEMENT ?
             $numberOfExperienceYears :
             self::MAX_YEARS_WITH_SUPPLEMENT;
 
-        return $basicSalary + $salarySupplement * $numberOfSupplements;
+        return $salaryComponents->getBasicSalary() + $salaryComponents->getSalarySupplement() * $numberOfSupplements;
     }
 
     public function supportsSupplementType(SupplementType $supplementType): bool
